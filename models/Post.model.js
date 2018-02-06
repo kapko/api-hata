@@ -79,15 +79,14 @@ module.exports = mongoose.model('Post', new mongoose.Schema({
   },
   lat: {
     type: Number,
+    require: true,
   },
   lng: {
     type: Number,
-  },
-  created: {
-    type: Number
+    require: true,
   },
   description: {
     type: String,
     required: [true, errMessage.required]
   },
-}));
+}, { timestamps: { createdAt: 'created_at' } }));
