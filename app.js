@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const os = require('os');
+
 const routes = {};
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,13 +19,9 @@ for (let routerName in routes) {
 }
 
 // load mongoose package
-var mongoose = require('mongoose');
-
 mongoose.Promise = global.Promise;
-// connect to MongoDB
 mongoose.connect('mongodb://localhost/todo')
-  .then(() =>  console.log('connection succesful'))
+  .then(() =>  console.log('DB. connection succesful'))
   .catch((err) => console.error(err));
 
-app.listen('3000', (req, res) => console.log('port is 3000'));
-2
+app.listen('3000', (req, res) => console.log('Port:3000'));

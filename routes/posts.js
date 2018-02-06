@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+// model
 var Todo = require('../models/Post.model');
 
 /* GET /posts/listing. */
@@ -14,7 +14,10 @@ router.get('/', function(req, res, next) {
 /* POST /posts*/
 router.post('/', function(req, res) {
   Todo.create(req.body, function (err, post) {
-    if (err) return next(err);
+    if (err) {
+      console.log('err', err);
+      return 'err';
+    }
     res.json(post);
   });
 });

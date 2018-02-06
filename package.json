@@ -11,5 +11,8 @@
     "express": "~4.13.4",
     "mongoose": "4.5.8",
     "nodemon": "^1.14.12"
+  },
+  "devDependencies": {
+    "os": "^0.1.1"
   }
 }
