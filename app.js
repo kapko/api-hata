@@ -5,7 +5,7 @@ const os = require('os');
 
 const routes = {};
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 require('fs').readdirSync(__dirname + '/routes').forEach(fileName => {
   let variables = fileName.split('.js')[0],

@@ -4,9 +4,23 @@ var router = express.Router();
 var Todo = require('../models/Todo.js');
 
 /* GET /todos listing. */
-router.get('/', function(req, res, next) {
-  Todo.find(function (err, todos) {
-    if (err) return next(err);
+router.get('/', function(req, res) {
+  let notes = [];
+  if (req.query.note) {
+    if (typeof req.query.note !== 'string') {
+      req.query.note.forEach(noteItem => notes.push(noteItem));
+    } else {
+      notes.push(req.query.note);
+    }
+
+    delete req.query.note;
+    req.query.note = {$all: notes};
+  }
+  console.log(req.query);
+  
+  
+  Todo.find(req.query, (err, todos) => {
+    if (err) return err;
     res.json(todos);
   });
 });
@@ -14,7 +28,7 @@ router.get('/', function(req, res, next) {
 /* POST /todos */
 router.post('/', function(req, res) {
   Todo.create(req.body, function (err, post) {
-    if (err) return next(err);
+    if (err) return err;
     res.json(post);
   });
 });
