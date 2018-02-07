@@ -6,6 +6,8 @@ var Todo = require('../models/Todo.js');
 /* GET /todos listing. */
 router.get('/', function(req, res) {
   let notes = [];
+  let data = {};
+
   if (req.query.note) {
     if (typeof req.query.note !== 'string') {
       req.query.note.forEach(noteItem => notes.push(noteItem));
@@ -16,12 +18,15 @@ router.get('/', function(req, res) {
     delete req.query.note;
     req.query.note = {$all: notes};
   }
-  console.log(req.query);
-  
-  
+
+  Todo.count(req.query, (err, count) => {
+    data['count'] = count;
+  });
+
   Todo.find(req.query, (err, todos) => {
     if (err) return err;
-    res.json(todos);
+    data['data'] = todos;
+    res.json(data);
   });
 });
 
